@@ -23,6 +23,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { MapPin, Star } from 'lucide-react';
 import { LocationFilter } from '@/components/shared/LocationFilter';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 type Cook = {
   id: string;
@@ -81,6 +84,11 @@ export default function Home() {
   const [radius, setRadius] = useState<string>('nearby');
   const [cooks, setCooks] = useState<Cook[]>([]);
   const [allCooks, setAllCooks] = useState<Cook[]>([]);
+  const [deliveryOption, setDeliveryOption] = useState('takeaway');
+  const [isOpenNow, setIsOpenNow] = useState(false);
+  const [cookType, setCookType] = useState('all');
+  const [specialty, setSpecialty] = useState('all');
+  const [specialties, setSpecialties] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCooks = async () => {
@@ -89,6 +97,13 @@ export default function Home() {
       const cooksList = cooksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Cook));
       setCooks(cooksList);
       setAllCooks(cooksList);
+
+      const allSpecialties = cooksList.reduce((acc: string[], cook) => {
+        const cookSpecialties = cook.specialties.split(',').map(s => s.trim());
+        return [...acc, ...cookSpecialties];
+      }, []);
+      const uniqueSpecialties = Array.from(new Set(allSpecialties));
+      setSpecialties(uniqueSpecialties);
     };
 
     fetchCooks();
@@ -114,9 +129,12 @@ export default function Home() {
   };
 
   useEffect(() => {
+    let filteredCooks = [...allCooks];
+
+    // Filter by location and radius
     if (userLocation && radius !== 'nearby') {
       const numericRadius = parseInt(radius, 10);
-      const filteredCooks = allCooks
+      filteredCooks = filteredCooks
         .map((cook) => ({
           ...cook,
           distance: haversineDistance(
@@ -128,11 +146,25 @@ export default function Home() {
         }))
         .filter((cook) => cook.distance <= numericRadius)
         .sort((a, b) => a.distance - b.distance);
-      setCooks(filteredCooks);
-    } else {
-      setCooks(allCooks);
     }
-  }, [userLocation, radius, allCooks]);
+
+    // Filter by open now
+    if (isOpenNow) {
+      filteredCooks = filteredCooks.filter(cook => cook.status === 'Ouvert');
+    }
+
+    // Filter by cook type
+    if (cookType !== 'all') {
+      filteredCooks = filteredCooks.filter(cook => cook.cookType === cookType);
+    }
+
+    // Filter by specialty
+    if (specialty !== 'all') {
+      filteredCooks = filteredCooks.filter(cook => cook.specialties.includes(specialty));
+    }
+
+    setCooks(filteredCooks);
+  }, [userLocation, radius, allCooks, isOpenNow, cookType, specialty]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -142,6 +174,48 @@ export default function Home() {
             onLocationChange={setUserLocation}
             onRadiusChange={setRadius}
           />
+          <div>
+            <Label>Option</Label>
+            <RadioGroup value={deliveryOption} onValueChange={setDeliveryOption} className="flex items-center mt-2">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="takeaway" id="takeaway" />
+                <Label htmlFor="takeaway">À emporter</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="delivery" id="delivery" />
+                <Label htmlFor="delivery">Livraison</Label>
+              </div>
+            </RadioGroup>
+          </div>
+          <div className="flex items-center space-x-2 mt-auto mb-2">
+            <Checkbox id="open-now" checked={isOpenNow} onCheckedChange={(checked: boolean) => setIsOpenNow(!!checked)} />
+            <Label htmlFor="open-now">Ouvert actuellement</Label>
+          </div>
+          <div>
+            <Label htmlFor="cook-type">Type de cuisinier</Label>
+            <Select value={cookType} onValueChange={setCookType}>
+              <SelectTrigger id="cook-type">
+                <SelectValue placeholder="Tous" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous</SelectItem>
+                <SelectItem value="particulier">Particulier</SelectItem>
+                <SelectItem value="professionnel">Professionnel</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="specialty">Spécialité</Label>
+            <Select value={specialty} onValueChange={setSpecialty}>
+              <SelectTrigger id="specialty">
+                <SelectValue placeholder="Toutes" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Toutes</SelectItem>
+                {specialties.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
