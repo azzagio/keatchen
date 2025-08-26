@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -17,8 +20,9 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { MapPin, Star } from 'lucide-react';
+import { LocationFilter } from '@/components/shared/LocationFilter';
 
-const cooks = [
+const cooksData = [
   {
     id: '1',
     name: 'Chef Isabella Rossi',
@@ -29,6 +33,8 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Ouvert',
     dataAiHint: 'italian food',
+    latitude: 48.8566,
+    longitude: 2.3522,
   },
   {
     id: '2',
@@ -40,6 +46,8 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Ouvert',
     dataAiHint: 'chinese food',
+    latitude: 48.86,
+    longitude: 2.36,
   },
   {
     id: '3',
@@ -51,6 +59,8 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Fermé',
     dataAiHint: 'african food',
+    latitude: 48.85,
+    longitude: 2.34,
   },
   {
     id: '4',
@@ -62,8 +72,10 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Ouvert',
     dataAiHint: 'bakery goods',
+    latitude: 48.87,
+    longitude: 2.33,
   },
-    {
+  {
     id: '5',
     name: 'Taco Fiesta',
     description: 'Tacos de rue mexicains authentiques et colorés.',
@@ -73,6 +85,8 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Ouvert',
     dataAiHint: 'mexican food',
+    latitude: 48.84,
+    longitude: 2.35,
   },
   {
     id: '6',
@@ -84,10 +98,14 @@ const cooks = [
     image: 'https://placehold.co/600x400.png',
     status: 'Ouvert',
     dataAiHint: 'japanese sushi',
+    latitude: 48.88,
+    longitude: 2.37,
   },
 ];
 
-const CookCard = ({ cook }: { cook: (typeof cooks)[0] }) => (
+type Cook = (typeof cooksData)[0];
+
+const CookCard = ({ cook }: { cook: Cook }) => (
   <Link href={`/cook/${cook.id}`} className="block group">
     <Card className="shadow-neumo-light dark:shadow-neumo-dark overflow-hidden transition-transform duration-300 ease-in-out group-hover:-translate-y-2">
       <CardHeader className="p-0 relative">
@@ -120,6 +138,50 @@ const CookCard = ({ cook }: { cook: (typeof cooks)[0] }) => (
 
 
 export default function Home() {
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [radius, setRadius] = useState<string>('nearby');
+  const [cooks, setCooks] = useState<Cook[]>(cooksData);
+
+  const haversineDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  useEffect(() => {
+    if (userLocation && radius !== 'nearby') {
+      const numericRadius = parseInt(radius, 10);
+      const filteredCooks = cooksData
+        .map((cook) => ({
+          ...cook,
+          distance: haversineDistance(
+            userLocation.latitude,
+            userLocation.longitude,
+            cook.latitude,
+            cook.longitude
+          ),
+        }))
+        .filter((cook) => cook.distance <= numericRadius)
+        .sort((a, b) => a.distance - b.distance);
+      setCooks(filteredCooks);
+    } else {
+      setCooks(cooksData);
+    }
+  }, [userLocation, radius]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="text-center mb-12">
@@ -131,10 +193,10 @@ export default function Home() {
 
       <div className="bg-background/80 backdrop-blur-sm sticky top-0 z-10 py-4 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-            <div className="flex-grow">
-              <label className="text-sm font-medium text-muted-foreground mb-1 block">Lieu</label>
-              <Input placeholder="Entrez votre adresse ou ville..." className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
-            </div>
+          <LocationFilter
+            onLocationChange={setUserLocation}
+            onRadiusChange={setRadius}
+          />
           <div>
             <label className="text-sm font-medium text-muted-foreground mb-1 block">Livraison / À emporter</label>
             <Select>
