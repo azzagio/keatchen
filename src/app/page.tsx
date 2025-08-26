@@ -45,8 +45,8 @@ const CookCard = ({ cook }: { cook: Cook }) => (
     <Card className="shadow-neumo-light dark:shadow-neumo-dark overflow-hidden transition-transform duration-300 ease-in-out group-hover:-translate-y-2">
       <CardHeader className="p-0 relative">
         <Image
-          src={cook.profilePicture || `https://placehold.co/600x400.png?text=${cook.publicName.charAt(0)}`}
-          alt={cook.publicName}
+          src={cook.profilePicture || `https://placehold.co/600x400.png?text=${cook.publicName ? cook.publicName.charAt(0) : 'K'}`}
+          alt={cook.publicName || 'Cuisinier'}
           width={600}
           height={400}
           className="aspect-video object-cover"
@@ -59,7 +59,7 @@ const CookCard = ({ cook }: { cook: Cook }) => (
         )}
       </CardHeader>
       <CardContent className="p-4">
-        <CardTitle className="text-lg font-headline truncate">{cook.publicName}</CardTitle>
+        <CardTitle className="text-lg font-headline truncate">{cook.publicName || 'Nom indisponible'}</CardTitle>
         <CardDescription className="mt-1 text-sm truncate">{cook.bio}</CardDescription>
         <div className="flex justify-between items-center mt-3 text-sm text-muted-foreground">
           <span>{cook.specialties}</span>
