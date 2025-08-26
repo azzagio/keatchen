@@ -24,33 +24,46 @@ export const LocationFilter = ({
   onRadiusChange,
 }: LocationFilterProps) => {
   const [error, setError] = useState<string | null>(null);
+  const [city, setCity] = useState<string | null>(null);
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError('La géolocalisation n\'est pas supportée par votre navigateur.');
+      setError("La géolocalisation n'est pas supportée par votre navigateur.");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      async (pos) => {
         const newPosition = {
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
         };
         onLocationChange(newPosition);
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`
+          );
+          const data = await response.json();
+          setCity(data.address.city || data.address.town || data.address.village);
+        } catch (error) {
+          console.error('Error fetching city name:', error);
+        }
       },
       (err) => {
         setError(err.message);
       }
     );
-  }, []);
+  }, [onLocationChange]);
 
   return (
     <div>
-      <label className="text-sm font-medium text-muted-foreground mb-1 block">Lieu</label>
+      <label className="text-sm font-medium text-muted-foreground mb-1 block">
+        Lieu {city && `- ${city}`}
+      </label>
       <Select
         defaultValue="nearby"
-        onValueChange={(value) => onRadiusChange(value)}
+        onValueChange={(value: string) => onRadiusChange(value)}
       >
         <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
           <SelectValue placeholder="À proximité" />

@@ -28,6 +28,10 @@ body {
     --input: 210 40% 91%;
     --ring: 217 91% 60%;
     --radius: 0.8rem;
+
+    --vibrant-green: 140 70% 55%;
+    --vibrant-orange: 30 90% 60%;
+    --vibrant-purple: 260 70% 65%;
   }
 
   .dark {
@@ -50,6 +54,10 @@ body {
     --border: 210 40% 20%;
     --input: 210 40% 15%;
     --ring: 217 91% 60%;
+
+    --vibrant-green: 140 70% 55%;
+    --vibrant-orange: 30 90% 60%;
+    --vibrant-purple: 260 70% 65%;
   }
 }
 

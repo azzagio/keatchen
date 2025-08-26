@@ -136,62 +136,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <section className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-2">Trouvez Votre Saveur</h1>
-        <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-          Découvrez des cuisiniers amateurs et des chefs professionnels talentueux près de chez vous.
-        </p>
-      </section>
-
       <div className="bg-background/80 backdrop-blur-sm sticky top-0 z-10 py-4 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
           <LocationFilter
             onLocationChange={setUserLocation}
             onRadiusChange={setRadius}
           />
-          <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Livraison / À emporter</label>
-            <Select>
-              <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="Tous" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous</SelectItem>
-                <SelectItem value="delivery">Livraison</SelectItem>
-                <SelectItem value="takeout">À emporter</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Type de cuisinier</label>
-            <Select>
-              <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="Tous" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous</SelectItem>
-                <SelectItem value="individual">Particulier</SelectItem>
-                <SelectItem value="professional">Professionnel</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Cuisine</label>
-            <Select>
-              <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="Toutes les cuisines" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Toutes les cuisines</SelectItem>
-                <SelectItem value="italian">Italienne</SelectItem>
-                <SelectItem value="chinese">Chinoise</SelectItem>
-                <SelectItem value="african">Africaine</SelectItem>
-                <SelectItem value="bakery">Boulangerie</SelectItem>
-                <SelectItem value="mexican">Mexicaine</SelectItem>
-                <SelectItem value="japanese">Japonaise</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </div>
 
@@ -199,6 +149,12 @@ export default function Home() {
         {cooks.map((cook) => (
           <CookCard key={cook.id} cook={cook} />
         ))}
+      </div>
+
+      <div className="mt-12 text-center">
+        <Button className="bg-vibrant-green text-white hover:bg-vibrant-green/90">
+          Voir plus de cuisiniers
+        </Button>
       </div>
     </div>
   );
