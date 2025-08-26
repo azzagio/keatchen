@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Facebook } from "lucide-react";
+// Assume firebase is configured and auth/firestore are exported from "@/lib/firebase"
+// import { auth, firestore } from "@/lib/firebase";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { doc, setDoc } from "firebase/firestore";
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px" {...props}>
@@ -24,6 +30,55 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 )
 
 export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("client");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    // This is a placeholder for the actual Firebase logic.
+    // In a real app, you would uncomment the firebase imports and use them.
+    console.log("Signing up with:", { email, password, role });
+    alert(`(Simulation) Inscription réussie pour ${email} en tant que ${role}.`);
+
+    // Mock redirection logic
+    if (role === "cook") {
+      router.push("/onboarding/cook/step-1");
+    } else {
+      router.push("/");
+    }
+
+    /*
+    // REAL FIREBASE LOGIC
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Create user document in Firestore
+      await setDoc(doc(firestore, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        role: role,
+        createdAt: new Date(),
+      });
+
+      if (role === 'cook') {
+        router.push('/onboarding/cook/step-1');
+      } else {
+        router.push('/'); // or '/profile/client'
+      }
+
+    } catch (error: any) {
+      setError(error.message);
+      console.error("Error signing up:", error);
+    }
+    */
+  };
+
   return (
     <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-neumo-light dark:shadow-neumo-dark border-0">
@@ -33,43 +88,66 @@ export default function SignupPage() {
             Rejoignez Keatchen pour commander ou vendre de délicieux plats faits maison.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Je suis un(e)...</Label>
-            <RadioGroup defaultValue="client" className="grid grid-cols-2 gap-4">
-              <div>
-                <RadioGroupItem value="client" id="client" className="peer sr-only" />
-                <Label
-                  htmlFor="client"
-                  className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary shadow-neumo-light-inset dark:shadow-neumo-dark-inset cursor-pointer"
-                >
-                  Client
-                </Label>
-              </div>
-              <div>
-                <RadioGroupItem value="cook" id="cook" className="peer sr-only" />
-                <Label
-                  htmlFor="cook"
-                  className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary shadow-neumo-light-inset dark:shadow-neumo-dark-inset cursor-pointer"
-                >
-                  Cuisinier
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="vous@exemple.com" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Mot de passe</Label>
-            <Input id="password" type="password" placeholder="••••••••" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
-          </div>
-          <Button className="w-full shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">
-            S'inscrire
-          </Button>
+        <CardContent>
+          <form onSubmit={handleSignUp} className="space-y-4">
+            <div className="space-y-2">
+              <Label>Je suis un(e)...</Label>
+              <RadioGroup
+                value={role}
+                onValueChange={setRole}
+                className="grid grid-cols-2 gap-4"
+              >
+                <div>
+                  <RadioGroupItem value="client" id="client" className="peer sr-only" />
+                  <Label
+                    htmlFor="client"
+                    className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary shadow-neumo-light-inset dark:shadow-neumo-dark-inset cursor-pointer"
+                  >
+                    Client
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem value="cook" id="cook" className="peer sr-only" />
+                  <Label
+                    htmlFor="cook"
+                    className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary shadow-neumo-light-inset dark:shadow-neumo-dark-inset cursor-pointer"
+                  >
+                    Cuisinier
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="vous@exemple.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset"
+              />
+            </div>
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <Button type="submit" className="w-full shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">
+              S'inscrire
+            </Button>
+          </form>
 
-           <div className="relative my-4">
+          <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
