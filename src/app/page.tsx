@@ -87,8 +87,6 @@ export default function Home() {
   const [deliveryOption, setDeliveryOption] = useState('takeaway');
   const [isOpenNow, setIsOpenNow] = useState(false);
   const [cookType, setCookType] = useState('all');
-  const [specialty, setSpecialty] = useState('all');
-  const [specialties, setSpecialties] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCooks = async () => {
@@ -97,13 +95,6 @@ export default function Home() {
       const cooksList = cooksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Cook));
       setCooks(cooksList);
       setAllCooks(cooksList);
-
-      const allSpecialties = cooksList.reduce((acc: string[], cook) => {
-        const cookSpecialties = cook.specialties.split(',').map(s => s.trim());
-        return [...acc, ...cookSpecialties];
-      }, []);
-      const uniqueSpecialties = Array.from(new Set(allSpecialties));
-      setSpecialties(uniqueSpecialties);
     };
 
     fetchCooks();
@@ -158,13 +149,8 @@ export default function Home() {
       filteredCooks = filteredCooks.filter(cook => cook.cookType === cookType);
     }
 
-    // Filter by specialty
-    if (specialty !== 'all') {
-      filteredCooks = filteredCooks.filter(cook => cook.specialties.includes(specialty));
-    }
-
     setCooks(filteredCooks);
-  }, [userLocation, radius, allCooks, isOpenNow, cookType, specialty]);
+  }, [userLocation, radius, allCooks, isOpenNow, cookType]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -201,18 +187,6 @@ export default function Home() {
                 <SelectItem value="all">Tous</SelectItem>
                 <SelectItem value="particulier">Particulier</SelectItem>
                 <SelectItem value="professionnel">Professionnel</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label htmlFor="specialty">Spécialité</Label>
-            <Select value={specialty} onValueChange={setSpecialty}>
-              <SelectTrigger id="specialty">
-                <SelectValue placeholder="Toutes" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Toutes</SelectItem>
-                {specialties.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
