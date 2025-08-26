@@ -24,16 +24,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-
-const salesData = [
-  { name: "Jan", total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: "Fév", total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: "Mar", total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: "Avr", total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: "Mai", total: Math.floor(Math.random() * 5000) + 1000 },
-  { name: "Juin", total: Math.floor(Math.random() * 5000) + 1000 },
-];
+import { SalesChart } from "@/components/shared/SalesChart";
 
 const dishes = [
     { id: 'm1', name: 'Lasagnes Classiques', price: 15.99, stock: 10, visible: true },
@@ -159,13 +150,7 @@ export default function CookDashboardPage() {
               <CardDescription>Votre performance de ventes des 6 derniers mois.</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-                <ResponsiveContainer width="100%" height={350}>
-                    <BarChart data={salesData}>
-                        <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false}/>
-                        <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`}/>
-                        <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                </ResponsiveContainer>
+              <SalesChart />
             </CardContent>
           </Card>
         </TabsContent>
