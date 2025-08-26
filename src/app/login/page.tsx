@@ -28,18 +28,18 @@ export default function LoginPage() {
     <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-neumo-light dark:shadow-neumo-dark border-0">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-headline">Welcome Back!</CardTitle>
+          <CardTitle className="text-2xl font-headline">Bon retour !</CardTitle>
           <CardDescription>
-            Sign in to continue to Keatchen.
+            Connectez-vous pour continuer sur Keatchen.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="you@example.com" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
+            <Input id="email" type="email" placeholder="vous@exemple.com" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Mot de passe</Label>
             <Input id="password" type="password" placeholder="••••••••" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
           </div>
            <div className="flex items-center justify-end">
@@ -47,11 +47,11 @@ export default function LoginPage() {
                 href="#"
                 className="text-sm font-medium text-primary hover:underline"
               >
-                Forgot password?
+                Mot de passe oublié ?
               </Link>
            </div>
           <Button className="w-full shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">
-            Log In
+            Se connecter
           </Button>
 
           <div className="relative my-4">
@@ -60,7 +60,7 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
+                Ou continuer avec
               </span>
             </div>
           </div>
@@ -76,9 +76,9 @@ export default function LoginPage() {
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Don't have an account?{" "}
+            Vous n'avez pas de compte ?{" "}
             <Link href="/signup" className="font-medium text-primary hover:underline">
-              Sign up
+              S'inscrire
             </Link>
           </div>
         </CardContent>

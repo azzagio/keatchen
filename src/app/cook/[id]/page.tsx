@@ -15,26 +15,26 @@ import { Star, MapPin, Phone, Calendar, Clock, ShoppingCart, MessageSquare, Uten
 const cookData = {
   id: '1',
   name: 'Chef Isabella Rossi',
-  bio: 'Passionate about bringing the heart of Italy to your table. Every dish is crafted with love, using traditional family recipes passed down through generations.',
-  cuisine: 'Italian',
-  specialties: ['Lasagna', 'Carbonara', 'Tiramisu'],
-  type: 'Professional',
+  bio: 'Passionnée par l\'idée d\'amener le cœur de l\'Italie à votre table. Chaque plat est préparé avec amour, en utilisant des recettes familiales traditionnelles transmises de génération en génération.',
+  cuisine: 'Italienne',
+  specialties: ['Lasagnes', 'Carbonara', 'Tiramisu'],
+  type: 'Professionnel',
   rating: 4.9,
   reviewCount: 124,
   image: 'https://placehold.co/150x150.png',
   dataAiHint: 'chef portrait',
-  address: '123 Pasta Lane, Flavor Town',
+  address: '123 Ruelle des Pâtes, Ville des Saveurs',
   phone: '555-123-4567',
-  availability: 'Mon - Sat: 11am - 9pm',
-  deliveryTime: '30-45 mins',
+  availability: 'Lun - Sam: 11h - 21h',
+  deliveryTime: '30-45 min',
   menu: [
-    { id: 'm1', name: 'Classic Lasagna', description: 'Layers of fresh pasta, rich bolognese sauce, and creamy béchamel.', price: 15.99, image: 'https://placehold.co/600x400.png', dataAiHint: 'lasagna dish' },
-    { id: 'm2', name: 'Spaghetti Carbonara', description: 'A Roman classic with eggs, pecorino cheese, guanciale, and black pepper.', price: 13.50, image: 'https://placehold.co/600x400.png', dataAiHint: 'carbonara pasta' },
-    { id: 'm3', name: 'Margherita Pizza', description: 'Simple and delicious with San Marzano tomatoes, fresh mozzarella, and basil.', price: 12.00, image: 'https://placehold.co/600x400.png', dataAiHint: 'margherita pizza' },
+    { id: 'm1', name: 'Lasagnes Classiques', description: 'Couches de pâtes fraîches, sauce bolognaise riche et béchamel onctueuse.', price: 15.99, image: 'https://placehold.co/600x400.png', dataAiHint: 'lasagna dish' },
+    { id: 'm2', name: 'Spaghetti Carbonara', description: 'Un classique romain avec des œufs, du fromage pecorino, du guanciale et du poivre noir.', price: 13.50, image: 'https://placehold.co/600x400.png', dataAiHint: 'carbonara pasta' },
+    { id: 'm3', name: 'Pizza Margherita', description: 'Simple et délicieuse avec des tomates San Marzano, de la mozzarella fraîche et du basilic.', price: 12.00, image: 'https://placehold.co/600x400.png', dataAiHint: 'margherita pizza' },
   ],
   reviews: [
-    { id: 'r1', author: 'Jane Doe', rating: 5, comment: 'Absolutely the best lasagna I have ever had! Felt like I was in Italy.' },
-    { id: 'r2', author: 'John Smith', rating: 4, comment: 'The Carbonara was fantastic, very authentic. A bit pricey but worth it.' },
+    { id: 'r1', author: 'Jane Doe', rating: 5, comment: 'Absolument les meilleures lasagnes que j\'ai jamais mangées ! J\'avais l\'impression d\'être en Italie.' },
+    { id: 'r2', author: 'John Smith', rating: 4, comment: 'La Carbonara était fantastique, très authentique. Un peu cher mais ça vaut le coup.' },
   ],
 };
 
@@ -57,7 +57,7 @@ const DishCard = ({ dish }: { dish: (typeof cookData.menu)[0] }) => (
         <span className="text-lg font-bold text-primary">${dish.price.toFixed(2)}</span>
         <Button size="sm" className="shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">
           <ShoppingCart className="mr-2 h-4 w-4" />
-          Add
+          Ajouter
         </Button>
       </div>
     </CardContent>
@@ -104,7 +104,7 @@ export default function CookProfilePage({ params }: { params: { id: string } }) 
                   <Star className="w-5 h-5 text-primary" fill="currentColor" />
                   <span className="font-bold text-foreground">{cookData.rating}</span>
                 </div>
-                <span>({cookData.reviewCount} reviews)</span>
+                <span>({cookData.reviewCount} avis)</span>
               </div>
             </div>
           </div>
@@ -113,8 +113,8 @@ export default function CookProfilePage({ params }: { params: { id: string } }) 
           <Tabs defaultValue="menu" className="w-full">
             <TabsList className="grid w-full grid-cols-3 bg-muted shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
               <TabsTrigger value="menu"><Utensils className="w-4 h-4 mr-2" />Menu</TabsTrigger>
-              <TabsTrigger value="info"><MapPin className="w-4 h-4 mr-2" />Info</TabsTrigger>
-              <TabsTrigger value="reviews"><MessageSquare className="w-4 h-4 mr-2" />Reviews</TabsTrigger>
+              <TabsTrigger value="info"><MapPin className="w-4 h-4 mr-2" />Infos</TabsTrigger>
+              <TabsTrigger value="reviews"><MessageSquare className="w-4 h-4 mr-2" />Avis</TabsTrigger>
             </TabsList>
             
             <TabsContent value="menu" className="mt-6">
@@ -132,7 +132,7 @@ export default function CookProfilePage({ params }: { params: { id: string } }) 
                         <div className="flex items-start gap-3">
                             <MapPin className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h3 className="font-semibold">Address</h3>
+                                <h3 className="font-semibold">Adresse</h3>
                                 <p className="text-muted-foreground">{cookData.address}</p>
                             </div>
                         </div>
@@ -155,21 +155,21 @@ export default function CookProfilePage({ params }: { params: { id: string } }) 
                         <div className="flex items-start gap-3">
                             <Calendar className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h3 className="font-semibold">Availability</h3>
+                                <h3 className="font-semibold">Disponibilité</h3>
                                 <p className="text-muted-foreground">{cookData.availability}</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3">
                             <Clock className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h3 className="font-semibold">Avg. Delivery Time</h3>
+                                <h3 className="font-semibold">Temps de liv. moyen</h3>
                                 <p className="text-muted-foreground">{cookData.deliveryTime}</p>
                             </div>
                         </div>
                          <div className="flex items-start gap-3">
                             <Star className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <h3 className="font-semibold">Specialties</h3>
+                                <h3 className="font-semibold">Spécialités</h3>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                     {cookData.specialties.map(spec => <Badge key={spec} variant="secondary">{spec}</Badge>)}
                                 </div>

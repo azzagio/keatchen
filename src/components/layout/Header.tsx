@@ -15,16 +15,16 @@ export function Header() {
         <div className="flex items-center gap-2 sm:gap-4">
           <Button variant="ghost" size="icon" className="shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset rounded-full">
             <ShoppingCart className="h-5 w-5" />
-            <span className="sr-only">Shopping Cart</span>
+            <span className="sr-only">Panier</span>
           </Button>
           <Link href="/login">
-            <Button variant="secondary" className="hidden sm:inline-flex shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">Log In</Button>
+            <Button variant="secondary" className="hidden sm:inline-flex shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">Se connecter</Button>
           </Link>
           <Link href="/signup">
-            <Button className="shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">Sign Up</Button>
+            <Button className="shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">S'inscrire</Button>
           </Link>
            <Link href="/profile/cook">
-             <Button variant="ghost" size="sm" className="hidden sm:inline-flex">For Cooks</Button>
+             <Button variant="ghost" size="sm" className="hidden sm:inline-flex">Pour les cuisiniers</Button>
            </Link>
         </div>
       </div>

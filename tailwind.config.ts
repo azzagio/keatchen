@@ -79,10 +79,10 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        'neumo-light': '5px 5px 10px hsl(60 56% 85%), -5px -5px 10px hsl(60 56% 97%)',
-        'neumo-light-inset': 'inset 5px 5px 10px hsl(60 56% 85%), inset -5px -5px 10px hsl(60 56% 97%)',
-        'neumo-dark': '5px 5px 10px hsl(40 5% 10%), -5px -5px 10px hsl(40 5% 20%)',
-        'neumo-dark-inset': 'inset 5px 5px 10px hsl(40 5% 10%), inset -5px -5px 10px hsl(40 5% 20%)',
+        'neumo-light': '5px 5px 10px hsl(var(--border)), -5px -5px 10px hsl(var(--card))',
+        'neumo-light-inset': 'inset 5px 5px 10px hsl(var(--border)), inset -5px -5px 10px hsl(var(--card))',
+        'neumo-dark': '5px 5px 10px hsl(210 40% 5%), -5px -5px 10px hsl(210 40% 15%)',
+        'neumo-dark-inset': 'inset 5px 5px 10px hsl(210 40% 5%), inset -5px -5px 10px hsl(210 40% 15%)',
       },
       keyframes: {
         'accordion-down': {

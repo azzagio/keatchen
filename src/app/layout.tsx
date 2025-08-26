@@ -7,7 +7,7 @@ import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Keatchen',
-  description: 'Connecting independent cooks with customers for homemade meals.',
+  description: 'Mettre en relation des cuisiniers indépendants avec des clients pour des repas faits maison.',
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="fr" className="h-full">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

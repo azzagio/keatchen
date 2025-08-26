@@ -22,67 +22,67 @@ const cooks = [
   {
     id: '1',
     name: 'Chef Isabella Rossi',
-    description: 'Authentic Italian pasta and homemade sauces.',
-    cuisine: 'Italian',
-    type: 'Professional',
+    description: 'Pâtes italiennes authentiques et sauces maison.',
+    cuisine: 'Italienne',
+    type: 'Professionnel',
     rating: 4.9,
     image: 'https://placehold.co/600x400.png',
-    status: 'Open',
+    status: 'Ouvert',
     dataAiHint: 'italian food',
   },
   {
     id: '2',
     name: 'Marco Chen',
-    description: 'Spicy Szechuan dishes that will warm your soul.',
-    cuisine: 'Chinese',
-    type: 'Individual',
+    description: 'Plats épicés du Sichuan qui réchaufferont votre âme.',
+    cuisine: 'Chinoise',
+    type: 'Particulier',
     rating: 4.7,
     image: 'https://placehold.co/600x400.png',
-    status: 'Open',
+    status: 'Ouvert',
     dataAiHint: 'chinese food',
   },
   {
     id: '3',
     name: 'Aisha Jalloh',
-    description: 'Hearty West African stews and grilled fish.',
-    cuisine: 'African',
-    type: 'Individual',
+    description: 'Ragoûts copieux d\'Afrique de l\'Ouest et poissons grillés.',
+    cuisine: 'Africaine',
+    type: 'Particulier',
     rating: 4.8,
     image: 'https://placehold.co/600x400.png',
-    status: 'Closed',
+    status: 'Fermé',
     dataAiHint: 'african food',
   },
   {
     id: '4',
-    name: 'The Baker\'s Corner',
-    description: 'Freshly baked bread, pastries, and cakes daily.',
-    cuisine: 'Bakery',
-    type: 'Professional',
+    name: 'Le Coin du Boulanger',
+    description: 'Pain frais, pâtisseries et gâteaux du jour.',
+    cuisine: 'Boulangerie',
+    type: 'Professionnel',
     rating: 5.0,
     image: 'https://placehold.co/600x400.png',
-    status: 'Open',
+    status: 'Ouvert',
     dataAiHint: 'bakery goods',
   },
     {
     id: '5',
     name: 'Taco Fiesta',
-    description: 'Vibrant and authentic Mexican street tacos.',
-    cuisine: 'Mexican',
-    type: 'Professional',
+    description: 'Tacos de rue mexicains authentiques et colorés.',
+    cuisine: 'Mexicaine',
+    type: 'Professionnel',
     rating: 4.6,
     image: 'https://placehold.co/600x400.png',
-    status: 'Open',
+    status: 'Ouvert',
     dataAiHint: 'mexican food',
   },
   {
     id: '6',
-    name: 'Sushi by Kenji',
-    description: 'Exquisite, fresh sushi and sashimi platters.',
-    cuisine: 'Japanese',
-    type: 'Individual',
+    name: 'Sushi par Kenji',
+    description: 'Plateaux de sushis et sashimis exquis et frais.',
+    cuisine: 'Japonaise',
+    type: 'Particulier',
     rating: 4.9,
     image: 'https://placehold.co/600x400.png',
-    status: 'Open',
+    status: 'Ouvert',
     dataAiHint: 'japanese sushi',
   },
 ];
@@ -99,7 +99,7 @@ const CookCard = ({ cook }: { cook: (typeof cooks)[0] }) => (
           className="aspect-video object-cover"
           data-ai-hint={cook.dataAiHint}
         />
-         <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-full ${cook.status === 'Open' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+         <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-full ${cook.status === 'Ouvert' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
             {cook.status}
         </div>
       </CardHeader>
@@ -123,41 +123,41 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-2">Find Your Flavor</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-2">Trouvez Votre Saveur</h1>
         <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-          Discover talented home cooks and professional chefs near you.
+          Découvrez des cuisiniers amateurs et des chefs professionnels talentueux près de chez vous.
         </p>
       </section>
 
       <div className="bg-background/80 backdrop-blur-sm sticky top-0 z-10 py-4 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div className="flex-grow">
-              <label className="text-sm font-medium text-muted-foreground mb-1 block">Location</label>
-              <Input placeholder="Enter your address or city..." className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
+              <label className="text-sm font-medium text-muted-foreground mb-1 block">Lieu</label>
+              <Input placeholder="Entrez votre adresse ou ville..." className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
             </div>
           <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Delivery / Takeout</label>
+            <label className="text-sm font-medium text-muted-foreground mb-1 block">Livraison / À emporter</label>
             <Select>
               <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="All" />
+                <SelectValue placeholder="Tous" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="delivery">Delivery</SelectItem>
-                <SelectItem value="takeout">Takeout</SelectItem>
+                <SelectItem value="all">Tous</SelectItem>
+                <SelectItem value="delivery">Livraison</SelectItem>
+                <SelectItem value="takeout">À emporter</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div>
-            <label className="text-sm font-medium text-muted-foreground mb-1 block">Cook Type</label>
+            <label className="text-sm font-medium text-muted-foreground mb-1 block">Type de cuisinier</label>
             <Select>
               <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="All" />
+                <SelectValue placeholder="Tous" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="individual">Individual</SelectItem>
-                <SelectItem value="professional">Professional</SelectItem>
+                <SelectItem value="all">Tous</SelectItem>
+                <SelectItem value="individual">Particulier</SelectItem>
+                <SelectItem value="professional">Professionnel</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -165,16 +165,16 @@ export default function Home() {
             <label className="text-sm font-medium text-muted-foreground mb-1 block">Cuisine</label>
             <Select>
               <SelectTrigger className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset">
-                <SelectValue placeholder="All Cuisines" />
+                <SelectValue placeholder="Toutes les cuisines" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Cuisines</SelectItem>
-                <SelectItem value="italian">Italian</SelectItem>
-                <SelectItem value="chinese">Chinese</SelectItem>
-                <SelectItem value="african">African</SelectItem>
-                <SelectItem value="bakery">Bakery</SelectItem>
-                <SelectItem value="mexican">Mexican</SelectItem>
-                <SelectItem value="japanese">Japanese</SelectItem>
+                <SelectItem value="all">Toutes les cuisines</SelectItem>
+                <SelectItem value="italian">Italienne</SelectItem>
+                <SelectItem value="chinese">Chinoise</SelectItem>
+                <SelectItem value="african">Africaine</SelectItem>
+                <SelectItem value="bakery">Boulangerie</SelectItem>
+                <SelectItem value="mexican">Mexicaine</SelectItem>
+                <SelectItem value="japanese">Japonaise</SelectItem>
               </SelectContent>
             </Select>
           </div>

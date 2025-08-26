@@ -28,14 +28,14 @@ export default function SignupPage() {
     <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-neumo-light dark:shadow-neumo-dark border-0">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-headline">Create an Account</CardTitle>
+          <CardTitle className="text-2xl font-headline">Créer un compte</CardTitle>
           <CardDescription>
-            Join Keatchen to order or sell amazing homemade food.
+            Rejoignez Keatchen pour commander ou vendre de délicieux plats faits maison.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>I am a...</Label>
+            <Label>Je suis un(e)...</Label>
             <RadioGroup defaultValue="client" className="grid grid-cols-2 gap-4">
               <div>
                 <RadioGroupItem value="client" id="client" className="peer sr-only" />
@@ -52,21 +52,21 @@ export default function SignupPage() {
                   htmlFor="cook"
                   className="flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary shadow-neumo-light-inset dark:shadow-neumo-dark-inset cursor-pointer"
                 >
-                  Cook
+                  Cuisinier
                 </Label>
               </div>
             </RadioGroup>
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="you@example.com" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
+            <Input id="email" type="email" placeholder="vous@exemple.com" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Mot de passe</Label>
             <Input id="password" type="password" placeholder="••••••••" className="shadow-neumo-light-inset dark:shadow-neumo-dark-inset" />
           </div>
           <Button className="w-full shadow-neumo-light dark:shadow-neumo-dark hover:shadow-neumo-light-inset dark:hover:shadow-neumo-dark-inset">
-            Sign Up
+            S'inscrire
           </Button>
 
            <div className="relative my-4">
@@ -75,7 +75,7 @@ export default function SignupPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or sign up with
+                Ou s'inscrire avec
               </span>
             </div>
           </div>
@@ -92,9 +92,9 @@ export default function SignupPage() {
           </div>
 
           <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
+            Vous avez déjà un compte ?{" "}
             <Link href="/login" className="font-medium text-primary hover:underline">
-              Log in
+              Se connecter
             </Link>
           </div>
         </CardContent>
