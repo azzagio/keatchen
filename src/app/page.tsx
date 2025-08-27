@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import Link from 'next/link';
@@ -82,7 +82,6 @@ const CookCard = ({ cook }: { cook: Cook }) => (
 export default function Home() {
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [radius, setRadius] = useState<string>('nearby');
-  const [cooks, setCooks] = useState<Cook[]>([]);
   const [allCooks, setAllCooks] = useState<Cook[]>([]);
   const [deliveryOption, setDeliveryOption] = useState('takeaway');
   const [isOpenNow, setIsOpenNow] = useState(false);
@@ -93,7 +92,6 @@ export default function Home() {
       const cooksCollection = collection(db, 'cooks');
       const cooksSnapshot = await getDocs(cooksCollection);
       const cooksList = cooksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Cook));
-      setCooks(cooksList);
       setAllCooks(cooksList);
     };
 
@@ -119,13 +117,13 @@ export default function Home() {
     return R * c;
   };
 
-  useEffect(() => {
-    let filteredCooks = [...allCooks];
+  const filteredCooks = useMemo(() => {
+    let cooks = [...allCooks];
 
     // Filter by location and radius
     if (userLocation && radius !== 'nearby') {
       const numericRadius = parseInt(radius, 10);
-      filteredCooks = filteredCooks
+      cooks = cooks
         .map((cook) => ({
           ...cook,
           distance: haversineDistance(
@@ -141,15 +139,15 @@ export default function Home() {
 
     // Filter by open now
     if (isOpenNow) {
-      filteredCooks = filteredCooks.filter(cook => cook.status === 'Ouvert');
+      cooks = cooks.filter(cook => cook.status === 'Ouvert');
     }
 
     // Filter by cook type
     if (cookType !== 'all') {
-      filteredCooks = filteredCooks.filter(cook => cook.cookType === cookType);
+      cooks = cooks.filter(cook => cook.cookType === cookType);
     }
 
-    setCooks(filteredCooks);
+    return cooks;
   }, [userLocation, radius, allCooks, isOpenNow, cookType]);
 
   return (
@@ -194,7 +192,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {cooks.map((cook) => (
+        {filteredCooks.map((cook) => (
           <CookCard key={cook.id} cook={cook} />
         ))}
       </div>
